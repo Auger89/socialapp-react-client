@@ -1,25 +1,36 @@
-import React from "react";
-import { Link, Router } from "@reach/router";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import "./App.css";
+import React from 'react';
+import { Router } from '@reach/router';
+import styled from '@emotion/styled';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Navbar from './components/Navbar';
+import './App.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/styles';
+import materialTheme from './theme';
 
-function App() {
+const Container = styled.div`
+  margin: 80px auto 0;
+  max-width: 1200px;
+`;
+
+const App = () => {
   return (
     <div className="App">
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Signup</Link>
-      </nav>
-      <Router>
-        <Home path="/" />
-        <Login path="/login" />
-        <Signup path="/signup" />
-      </Router>
+      <ThemeProvider theme={materialTheme}>
+        <CssBaseline />
+        <Navbar />
+        <Container>
+          <Router>
+            <Home path="/" />
+            <Login path="/login" />
+            <Signup path="/signup" />
+          </Router>
+        </Container>
+      </ThemeProvider>
     </div>
   );
-}
+};
 
 export default App;
