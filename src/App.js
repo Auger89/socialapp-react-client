@@ -15,22 +15,20 @@ const Container = styled.div`
   max-width: 1200px;
 `;
 
-const App = () => {
-  return (
-    <div className="App">
-      <ThemeProvider theme={materialTheme}>
-        <CssBaseline />
-        <Navbar />
-        <Container>
-          <Router>
-            <Home path="/" />
-            <Login path="/login" />
-            <Signup path="/signup" />
-          </Router>
-        </Container>
-      </ThemeProvider>
-    </div>
-  );
-};
+const App = () => (
+  <div className="App">
+    <ThemeProvider theme={materialTheme}>
+      <CssBaseline />
+      <Navbar />
+      <Container>
+        <Router>
+          <Home path="/" />
+          <Login path="/login" />
+          <Signup path="/signup" />
+        </Router>
+      </Container>
+    </ThemeProvider>
+  </div>
+);
 
 export default App;

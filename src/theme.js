@@ -25,4 +25,20 @@ const materialTheme = createMuiTheme({
   }
 });
 
+/*
+primary: {
+      main: '#c62828',
+      light: '#d15353',
+      dark: '#8a1c1c',
+      contrastText: '#fff'
+    },
+    secondary: {
+      main: '#c67028',
+      light: '#d18c53',
+      dark: '#8a4e1c',
+      contrastText: '#fff'
+    },
+
+*/
+
 export default materialTheme;

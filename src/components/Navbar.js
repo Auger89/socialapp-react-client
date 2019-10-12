@@ -12,25 +12,22 @@ const StyledToolBar = styled(Toolbar)`
 const RawLink = styled(Link)`
   color: inherit;
   cursor: pointer;
-  text-decoration: none;
 `;
 
-const Navbar = () => {
-  return (
-    <AppBar position="static">
-      <StyledToolBar>
-        <Button color="inherit">
-          <RawLink to="/">Home</RawLink>
-        </Button>
-        <Button color="inherit">
-          <RawLink to="/login">Login</RawLink>
-        </Button>
-        <Button color="inherit">
-          <RawLink to="/signup">Signup</RawLink>
-        </Button>
-      </StyledToolBar>
-    </AppBar>
-  );
-};
+const Navbar = () => (
+  <AppBar position="static">
+    <StyledToolBar>
+      <Button color="inherit">
+        <RawLink to="/">Home</RawLink>
+      </Button>
+      <Button color="inherit">
+        <RawLink to="/login">Login</RawLink>
+      </Button>
+      <Button color="inherit">
+        <RawLink to="/signup">Signup</RawLink>
+      </Button>
+    </StyledToolBar>
+  </AppBar>
+);
 
 export default Navbar;
