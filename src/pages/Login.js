@@ -1,9 +1,130 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Link } from '@reach/router';
+import service from '../services';
 
-const Login = () => (
-  <div>
-    <h1>Login page</h1>
-  </div>
-);
+const LoginGrid = styled(Grid)`
+  text-align: center;
+`;
+
+const AppIconImg = styled.img`
+  width: 128px;
+  // margin: 20px auto 20px auto;
+`;
+
+const LoginTextField = styled(TextField)`
+  margin: 10px auto 10px auto;
+`;
+
+const ErrorText = styled(Typography)`
+  color: red;
+  font-size: 0.8rem;
+  margin: 8px 0 12px 0;
+`;
+
+const Login = ({ navigate }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const onEmailChange = evt => setEmail(evt.target.value);
+  const onPasswordChange = evt => setPassword(evt.target.value);
+
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    setLoading(true);
+    service
+      .login({ email, password })
+      .then(res => {
+        console.log(res.data);
+        setLoading(false);
+        navigate('../');
+      })
+      .catch(err => {
+        console.log(err.toJSON());
+        setLoading(false);
+        setErrors(err.response.data);
+      });
+  };
+  console.log(loading);
+
+  return (
+    <LoginGrid container>
+      <Grid item sm />
+      <Grid item sm>
+        <AppIconImg
+          src="https://firebasestorage.googleapis.com/v0/b/social-app-45dd0.appspot.com/o/sun_icon.png?alt=media"
+          alt="app icon"
+        />
+        <Typography variant="h2">Login</Typography>
+        <form noValidate onSubmit={handleSubmit}>
+          <LoginTextField
+            id="email"
+            name="email"
+            type="email"
+            label="Email"
+            value={email}
+            helperText={errors.email}
+            error={!!errors.email}
+            onChange={onEmailChange}
+            fullWidth
+          />
+          <LoginTextField
+            id="password"
+            name="password"
+            type="password"
+            label="Password"
+            value={password}
+            helperText={errors.password}
+            error={!!errors.password}
+            onChange={onPasswordChange}
+            fullWidth
+          />
+          {errors.general && (
+            <ErrorText variant="body2">{errors.general}</ErrorText>
+          )}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={loading}
+          >
+            {loading && (
+              <CircularProgress
+                size={20}
+                style={{ color: 'white', marginRight: '8px' }}
+              />
+            )}
+            Login
+          </Button>
+          <Typography
+            variant="caption"
+            display="block"
+            style={{ marginTop: '8px' }}
+          >
+            Don&apos;t have an account? Sign up
+            <Link to="/signup"> here</Link>
+          </Typography>
+        </form>
+      </Grid>
+      <Grid item sm />
+    </LoginGrid>
+  );
+};
+
+Login.propTypes = {
+  navigate: PropTypes.func
+};
+
+Login.defaultProps = {
+  navigate: () => {}
+};
 
 export default Login;
