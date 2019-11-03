@@ -8,6 +8,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Link } from '@reach/router';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 const CardWrapper = styled(Card)`
   display: flex;
@@ -27,6 +29,7 @@ const Scream = ({ data }) => {
     userHandle,
     userImage
   } = data;
+  dayjs.extend(relativeTime);
   return (
     <CardWrapper>
       <CardImage image={userImage} title="Profile image" />
@@ -40,7 +43,7 @@ const Scream = ({ data }) => {
           {userHandle}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          {createdAt}
+          {dayjs(createdAt).fromNow()}
         </Typography>
         <Typography variant="body1">{body}</Typography>
       </CardContent>
