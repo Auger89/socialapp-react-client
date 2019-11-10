@@ -8,5 +8,6 @@ const firebase = axios.create({
 const service = {};
 service.getScreams = () => firebase.get('/screams');
 service.login = loginData => firebase.post('/login', loginData);
+service.signup = signupData => firebase.post('/signup', signupData);
 
 export default service;

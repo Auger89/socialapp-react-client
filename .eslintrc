@@ -16,6 +16,7 @@
     "linebreak-style": "off",
     "import/no-extraneous-dependencies": "off",
     "arrow-parens": ["error", "as-needed"],
-    "operator-linebreak": ["error", "after"]
+    "operator-linebreak": ["error", "after"],
+    "object-curly-newline": ["error", { "consistent": true }]
   }
 }

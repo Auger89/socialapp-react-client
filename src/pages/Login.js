@@ -1,32 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from '@reach/router';
+import { FormGrid, FormTextField, AppIconImg, ErrorText } from './components';
 import service from '../services';
-
-const LoginGrid = styled(Grid)`
-  text-align: center;
-`;
-
-const AppIconImg = styled.img`
-  width: 128px;
-  // margin: 20px auto 20px auto;
-`;
-
-const LoginTextField = styled(TextField)`
-  margin: 10px auto 10px auto;
-`;
-
-const ErrorText = styled(Typography)`
-  color: red;
-  font-size: 0.8rem;
-  margin: 8px 0 12px 0;
-`;
 
 const Login = ({ navigate }) => {
   const [email, setEmail] = useState('');
@@ -43,7 +23,7 @@ const Login = ({ navigate }) => {
     service
       .login({ email, password })
       .then(res => {
-        console.log(res.data);
+        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
         setLoading(false);
         navigate('../');
       })
@@ -53,10 +33,9 @@ const Login = ({ navigate }) => {
         setErrors(err.response.data);
       });
   };
-  console.log(loading);
 
   return (
-    <LoginGrid container>
+    <FormGrid container>
       <Grid item sm />
       <Grid item sm>
         <AppIconImg
@@ -65,7 +44,7 @@ const Login = ({ navigate }) => {
         />
         <Typography variant="h2">Login</Typography>
         <form noValidate onSubmit={handleSubmit}>
-          <LoginTextField
+          <FormTextField
             id="email"
             name="email"
             type="email"
@@ -76,7 +55,7 @@ const Login = ({ navigate }) => {
             onChange={onEmailChange}
             fullWidth
           />
-          <LoginTextField
+          <FormTextField
             id="password"
             name="password"
             type="password"
@@ -115,7 +94,7 @@ const Login = ({ navigate }) => {
         </form>
       </Grid>
       <Grid item sm />
-    </LoginGrid>
+    </FormGrid>
   );
 };
 
