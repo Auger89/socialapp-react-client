@@ -17,6 +17,7 @@
     "import/no-extraneous-dependencies": "off",
     "arrow-parens": ["error", "as-needed"],
     "operator-linebreak": ["error", "after"],
-    "object-curly-newline": ["error", { "consistent": true }]
+    "object-curly-newline": ["error", { "consistent": true }],
+    "react/jsx-props-no-spreading": "off"
   }
 }
