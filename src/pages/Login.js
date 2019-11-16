@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from '@reach/router';
 import { FormGrid, FormTextField, AppIconImg, ErrorText } from './components';
 import service from '../services';
+import { FIREBASE_ID_TOKEN, DEFAULT_IMAGE_URL } from '../utils/constants';
 
 const Login = ({ navigate }) => {
   const [email, setEmail] = useState('');
@@ -23,7 +24,7 @@ const Login = ({ navigate }) => {
     service
       .login({ email, password })
       .then(res => {
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
+        localStorage.setItem(FIREBASE_ID_TOKEN, `Bearer ${res.data.token}`);
         setLoading(false);
         navigate('../');
       })
@@ -38,10 +39,7 @@ const Login = ({ navigate }) => {
     <FormGrid container>
       <Grid item sm />
       <Grid item sm>
-        <AppIconImg
-          src="https://firebasestorage.googleapis.com/v0/b/social-app-45dd0.appspot.com/o/sun_icon.png?alt=media"
-          alt="app icon"
-        />
+        <AppIconImg src={DEFAULT_IMAGE_URL} alt="app icon" />
         <Typography variant="h2">Login</Typography>
         <form noValidate onSubmit={handleSubmit}>
           <FormTextField
