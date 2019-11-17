@@ -8,6 +8,7 @@ import { Link } from '@reach/router';
 import { FormGrid, FormTextField, AppIconImg, ErrorText } from './components';
 import service from '../services';
 import { FIREBASE_ID_TOKEN, DEFAULT_IMAGE_URL } from '../utils/constants';
+import { useUser } from '../contexts/userContext';
 
 const Signup = ({ navigate }) => {
   const [email, setEmail] = useState('');
@@ -16,6 +17,7 @@ const Signup = ({ navigate }) => {
   const [handle, setHandle] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const { authenticate } = useUser();
 
   const onEmailChange = evt => setEmail(evt.target.value);
   const onPasswordChange = evt => setPassword(evt.target.value);
@@ -35,6 +37,7 @@ const Signup = ({ navigate }) => {
       .then(res => {
         localStorage.setItem(FIREBASE_ID_TOKEN, `Bearer ${res.data.token}`);
         setLoading(false);
+        authenticate();
         navigate('../');
       })
       .catch(err => {
