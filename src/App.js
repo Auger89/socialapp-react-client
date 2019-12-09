@@ -10,7 +10,7 @@ import Navbar from './components/Navbar';
 import AuthRoute from './components/AuthRoute';
 import './App.css';
 import materialTheme from './utils/theme';
-import { UserProvider, useUser } from './contexts/userContext';
+import { UserProvider } from './contexts/userContext';
 
 const Container = styled.div`
   margin: 80px auto 0;
@@ -29,18 +29,14 @@ const App = () => (
   </div>
 );
 
-const AppContent = () => {
-  const { userData } = useUser();
-  const { authenticated } = userData;
-  return (
-    <Container>
-      <Router>
-        <Home path="/" />
-        <AuthRoute use={Login} auth={authenticated} path="/login" />
-        <AuthRoute use={Signup} auth={authenticated} path="/signup" />
-      </Router>
-    </Container>
-  );
-};
+const AppContent = () => (
+  <Container>
+    <Router>
+      <Home path="/" />
+      <AuthRoute use={Login} path="/login" />
+      <AuthRoute use={Signup} path="/signup" />
+    </Router>
+  </Container>
+);
 
 export default App;

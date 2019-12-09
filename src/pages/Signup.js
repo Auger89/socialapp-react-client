@@ -6,8 +6,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from '@reach/router';
 import { FormGrid, FormTextField, AppIconImg, ErrorText } from './components';
-import service from '../services';
-import { FIREBASE_ID_TOKEN, DEFAULT_IMAGE_URL } from '../utils/constants';
+import { DEFAULT_IMAGE_URL } from '../utils/constants';
 import { useUser } from '../contexts/userContext';
 
 const Signup = ({ navigate }) => {
@@ -17,34 +16,29 @@ const Signup = ({ navigate }) => {
   const [handle, setHandle] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const { authenticate } = useUser();
+  const { signup } = useUser();
 
   const onEmailChange = evt => setEmail(evt.target.value);
   const onPasswordChange = evt => setPassword(evt.target.value);
   const onConfirmPasswordChange = evt => setConfirmPassword(evt.target.value);
   const onHandleChange = evt => setHandle(evt.target.value);
 
-  const handleSubmit = evt => {
+  const handleSubmit = async evt => {
     evt.preventDefault();
     setLoading(true);
-    service
-      .signup({
-        email,
-        password,
-        confirmPassword,
-        handle
-      })
-      .then(res => {
-        localStorage.setItem(FIREBASE_ID_TOKEN, `Bearer ${res.data.token}`);
-        setLoading(false);
-        authenticate();
-        navigate('../');
-      })
-      .catch(err => {
-        console.log(err.toJSON());
-        setLoading(false);
-        setErrors(err.response.data);
-      });
+    const signupErrors = await signup({
+      email,
+      password,
+      confirmPassword,
+      handle
+    });
+    setLoading(false);
+
+    if (signupErrors) {
+      setErrors(signupErrors);
+    } else {
+      navigate('../');
+    }
   };
 
   return (

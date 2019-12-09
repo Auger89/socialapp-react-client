@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from '@reach/router';
+import { useUser } from '../contexts/userContext';
 
-const AuthRoute = ({ use: Component, auth, ...rest }) => {
-  // TODO Use context for user authentication
-  if (auth) {
+const AuthRoute = ({ use: Component, ...rest }) => {
+  const {
+    userData: { authenticated }
+  } = useUser();
+  
+  if (authenticated) {
     navigate('/');
   } else {
     return <Component {...rest} />;
