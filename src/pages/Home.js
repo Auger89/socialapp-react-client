@@ -17,7 +17,7 @@ const Home = () => {
     <Grid container spacing={4}>
       <Grid item sm={8} xs={12}>
         {screams ? (
-          screams.map(scream => <Scream key={scream.screamId} data={scream} />)
+          screams.map(scream => <Scream key={scream.id} data={scream} />)
         ) : (
           <p>Loading...</p>
         )}

@@ -8,6 +8,7 @@ const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
+  const [userData, setUserData] = useState();
   const isExpired = token => token.exp * 1000 < Date.now();
 
   const authenticate = () => {
@@ -22,33 +23,49 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  const login = async userData => {
+  const login = async data => {
     let errors = null;
-    await service
-      .login(userData)
-      .then(res => {
-        localStorage.setItem(FIREBASE_ID_TOKEN, `Bearer ${res.data.token}`);
-        authenticate();
-      })
-      .catch(err => {
+    try {
+      const response = await service.login(data);
+      localStorage.setItem(FIREBASE_ID_TOKEN, `Bearer ${response.data.token}`);
+      authenticate();
+    } catch (err) {
+      console.log(err.toJSON());
+      errors = err.response.data;
+    }
+
+    // TODO Review get User Data
+    if (!errors) {
+      try {
+        const response = await service.getUserData();
+        setUserData(response.data);
+      } catch (err) {
         console.log(err.toJSON());
-        errors = err.response.data;
-      });
+      }
+    }
     return errors;
   };
 
-  const signup = async userData => {
+  const signup = async data => {
     let errors = null;
-    await service
-      .signup(userData)
-      .then(res => {
-        localStorage.setItem(FIREBASE_ID_TOKEN, `Bearer ${res.data.token}`);
-        authenticate();
-      })
-      .catch(err => {
+    try {
+      const response = await service.signup(data);
+      localStorage.setItem(FIREBASE_ID_TOKEN, `Bearer ${response.data.token}`);
+      authenticate();
+    } catch (err) {
+      console.log(err.toJSON());
+      errors = err.response.data;
+    }
+
+    // TODO Review get User Data
+    if (!errors) {
+      try {
+        const response = await service.getUserData();
+        setUserData(response.data);
+      } catch (err) {
         console.log(err.toJSON());
-        errors = err.response.data;
-      });
+      }
+    }
     return errors;
   };
 
@@ -56,10 +73,10 @@ const UserProvider = ({ children }) => {
     authenticate();
   }, []);
 
-  const userData = { authenticated };
-  console.log('user authenticated? ', authenticated)
+  console.log('userData: ', userData);
+
   return (
-    <UserContext.Provider value={{ userData, login, signup }}>
+    <UserContext.Provider value={{ userData, authenticated, login, signup }}>
       {children}
     </UserContext.Provider>
   );

@@ -4,10 +4,8 @@ import { navigate } from '@reach/router';
 import { useUser } from '../contexts/userContext';
 
 const AuthRoute = ({ use: Component, ...rest }) => {
-  const {
-    userData: { authenticated }
-  } = useUser();
-  
+  const { authenticated } = useUser();
+
   if (authenticated) {
     navigate('/');
   } else {
