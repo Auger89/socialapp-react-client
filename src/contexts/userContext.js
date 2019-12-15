@@ -8,17 +8,33 @@ const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState(null);
   const isExpired = token => token.exp * 1000 < Date.now();
 
-  const authenticate = () => {
+  const getUserData = async () => {
+    try {
+      const response = await service.getUserData();
+      setUserData(response.data);
+    } catch (err) {
+      console.log(err.toJSON());
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem(FIREBASE_ID_TOKEN);
+    setAuthenticated(false);
+    setUserData(null);
+  };
+
+  const authenticate = async () => {
     const userToken = localStorage.getItem(FIREBASE_ID_TOKEN);
     if (userToken) {
       const decodedToken = jwtDecode(userToken);
       if (isExpired(decodedToken)) {
-        setAuthenticated(false);
+        logout();
       } else {
         setAuthenticated(true);
+        await getUserData();
       }
     }
   };
@@ -28,20 +44,10 @@ const UserProvider = ({ children }) => {
     try {
       const response = await service.login(data);
       localStorage.setItem(FIREBASE_ID_TOKEN, `Bearer ${response.data.token}`);
-      authenticate();
+      await authenticate();
     } catch (err) {
       console.log(err.toJSON());
       errors = err.response.data;
-    }
-
-    // TODO Review get User Data
-    if (!errors) {
-      try {
-        const response = await service.getUserData();
-        setUserData(response.data);
-      } catch (err) {
-        console.log(err.toJSON());
-      }
     }
     return errors;
   };
@@ -51,20 +57,10 @@ const UserProvider = ({ children }) => {
     try {
       const response = await service.signup(data);
       localStorage.setItem(FIREBASE_ID_TOKEN, `Bearer ${response.data.token}`);
-      authenticate();
+      await authenticate();
     } catch (err) {
       console.log(err.toJSON());
       errors = err.response.data;
-    }
-
-    // TODO Review get User Data
-    if (!errors) {
-      try {
-        const response = await service.getUserData();
-        setUserData(response.data);
-      } catch (err) {
-        console.log(err.toJSON());
-      }
     }
     return errors;
   };
@@ -76,7 +72,9 @@ const UserProvider = ({ children }) => {
   console.log('userData: ', userData);
 
   return (
-    <UserContext.Provider value={{ userData, authenticated, login, signup }}>
+    <UserContext.Provider
+      value={{ userData, authenticated, login, signup, logout }}
+    >
       {children}
     </UserContext.Provider>
   );
