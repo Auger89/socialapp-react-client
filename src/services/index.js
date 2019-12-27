@@ -14,5 +14,13 @@ service.getUserData = () =>
   firebase.get('/user', {
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
+service.uploadImage = image => {
+  const formData = new FormData();
+  formData.append('image', image, image.name);
+
+  return firebase.post('/user/image', formData, {
+    headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
+  });
+};
 
 export default service;

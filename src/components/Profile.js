@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from '@reach/router';
 import styled from '@emotion/styled';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import MaterialLink from '@material-ui/core/Link';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import LocationOn from '@material-ui/icons/LocationOn';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import LinkIcon from '@material-ui/icons/Link';
+import EditIcon from '@material-ui/icons/Edit';
 import dayjs from 'dayjs';
 import { useUser } from '../contexts/userContext';
+import service from '../services';
 
 const StyledPaper = styled(Paper)`
   padding: 20px;
@@ -64,10 +68,19 @@ const ProfileRow = styled.div`
 `;
 
 const Profile = () => {
-  const { userData, loadingUserData, authenticated } = useUser();
+  const { userData, getUserData, loadingUserData, authenticated } = useUser();
   const { credentials } = userData || {};
   const { handle, createdAt, imageUrl, bio, website, location } =
     credentials || {};
+  const imageInput = useRef();
+
+  const onImageChange = event => {
+    const image = event.target.files[0];
+    service
+      .uploadImage(image)
+      .then(() => getUserData())
+      .catch(err => console.log(err));
+  };
 
   if (!authenticated) {
     return (
@@ -102,6 +115,21 @@ const Profile = () => {
     <StyledPaper>
       <ImageWrapper>
         <ProfileImage src={imageUrl} alt="profile" />
+        <input
+          ref={imageInput}
+          type="file"
+          id="image-input"
+          hidden="hidden"
+          onChange={onImageChange}
+        />
+        <Tooltip title="Edit profile picture" placement="top">
+          <IconButton
+            onClick={() => imageInput.current.click()}
+            className="button"
+          >
+            <EditIcon color="primary" />
+          </IconButton>
+        </Tooltip>
       </ImageWrapper>
       <Separator />
       <ProfileDetails>

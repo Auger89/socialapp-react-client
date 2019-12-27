@@ -14,7 +14,7 @@ const UserProvider = ({ children }) => {
 
   const getUserData = async () => {
     setLoadingUserData(true);
-    
+
     try {
       const response = await service.getUserData();
       setUserData(response.data);
@@ -80,6 +80,7 @@ const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         userData,
+        getUserData,
         loadingUserData,
         authenticated,
         login,
