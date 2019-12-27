@@ -9,14 +9,19 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [loadingUserData, setLoadingUserData] = useState(false);
   const isExpired = token => token.exp * 1000 < Date.now();
 
   const getUserData = async () => {
+    setLoadingUserData(true);
+    
     try {
       const response = await service.getUserData();
       setUserData(response.data);
     } catch (err) {
       console.log(err.toJSON());
+    } finally {
+      setLoadingUserData(false);
     }
   };
 
@@ -73,7 +78,14 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ userData, authenticated, login, signup, logout }}
+      value={{
+        userData,
+        loadingUserData,
+        authenticated,
+        login,
+        signup,
+        logout
+      }}
     >
       {children}
     </UserContext.Provider>
