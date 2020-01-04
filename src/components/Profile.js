@@ -11,6 +11,7 @@ import LocationOn from '@material-ui/icons/LocationOn';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import LinkIcon from '@material-ui/icons/Link';
 import EditIcon from '@material-ui/icons/Edit';
+import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 import dayjs from 'dayjs';
 import { useUser } from '../contexts/userContext';
 import service from '../services';
@@ -67,8 +68,20 @@ const ProfileRow = styled.div`
   margin: auto;
 `;
 
+const EditButton = styled(IconButton)`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+`;
+
 const Profile = () => {
-  const { userData, getUserData, loadingUserData, authenticated } = useUser();
+  const {
+    userData,
+    getUserData,
+    loadingUserData,
+    logout,
+    authenticated
+  } = useUser();
   const { credentials } = userData || {};
   const { handle, createdAt, imageUrl, bio, website, location } =
     credentials || {};
@@ -123,12 +136,9 @@ const Profile = () => {
           onChange={onImageChange}
         />
         <Tooltip title="Edit profile picture" placement="top">
-          <IconButton
-            onClick={() => imageInput.current.click()}
-            className="button"
-          >
+          <EditButton onClick={() => imageInput.current.click()}>
             <EditIcon color="primary" />
-          </IconButton>
+          </EditButton>
         </Tooltip>
       </ImageWrapper>
       <Separator />
@@ -172,6 +182,11 @@ const Profile = () => {
           <CalendarToday color="primary" />
           <span>{`Joined ${dayjs(createdAt).format('MMM YYYY')}`}</span>
         </ProfileRow>
+        <Tooltip title="Logout" placement="top">
+          <IconButton onClick={logout}>
+            <KeyboardReturn color="primary" />
+          </IconButton>
+        </Tooltip>
       </ProfileDetails>
     </StyledPaper>
   );
