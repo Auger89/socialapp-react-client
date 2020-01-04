@@ -87,25 +87,25 @@ const Profile = () => {
       <Paper>
         <Typography variant="body2" align="center">
           Login to see your profile
-          <ButtonsContainer>
-            <Button
-              variant="contained"
-              color="primary"
-              component={Link}
-              to="/login"
-            >
-              Login
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              component={Link}
-              to="/signup"
-            >
-              Signup
-            </Button>
-          </ButtonsContainer>
         </Typography>
+        <ButtonsContainer>
+          <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            to="/login"
+          >
+            Login
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            component={Link}
+            to="/signup"
+          >
+            Signup
+          </Button>
+        </ButtonsContainer>
       </Paper>
     );
   }

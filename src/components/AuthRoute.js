@@ -15,12 +15,7 @@ const AuthRoute = ({ use: Component, ...rest }) => {
 };
 
 AuthRoute.propTypes = {
-  use: PropTypes.node.isRequired,
-  auth: PropTypes.bool
-};
-
-AuthRoute.defaultProps = {
-  auth: false
+  use: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired
 };
 
 export default AuthRoute;

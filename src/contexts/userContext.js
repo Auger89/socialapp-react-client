@@ -70,8 +70,12 @@ const UserProvider = ({ children }) => {
     return errors;
   };
 
+  // In order to execute an async function in a hook, we must create it inside (scoped)
   useEffect(() => {
-    authenticate();
+    const authenticateAndGetUserData = async () => {
+      await authenticate();
+    };
+    authenticateAndGetUserData();
   }, []);
 
   console.log('userData: ', userData);
