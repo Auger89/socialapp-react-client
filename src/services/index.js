@@ -22,5 +22,9 @@ service.uploadImage = image => {
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
 };
+service.editUserDetails = userData =>
+  firebase.post('/user', userData, {
+    headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
+  });
 
 export default service;

@@ -70,6 +70,13 @@ const UserProvider = ({ children }) => {
     return errors;
   };
 
+  const editUserDetails = userDetails => {
+    service
+      .editUserDetails(userDetails)
+      .then(getUserData)
+      .catch(err => console.log(err));
+  };
+
   // In order to execute an async function in a hook, we must create it inside (scoped)
   useEffect(() => {
     const authenticateAndGetUserData = async () => {
@@ -85,6 +92,7 @@ const UserProvider = ({ children }) => {
       value={{
         userData,
         getUserData,
+        editUserDetails,
         loadingUserData,
         authenticated,
         login,
