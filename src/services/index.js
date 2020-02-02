@@ -7,6 +7,7 @@ const firebase = axios.create({
 });
 
 const service = {};
+
 service.getScreams = () => firebase.get('/screams');
 service.login = loginData => firebase.post('/login', loginData);
 service.signup = signupData => firebase.post('/signup', signupData);
@@ -24,6 +25,14 @@ service.uploadImage = image => {
 };
 service.editUserDetails = userData =>
   firebase.post('/user', userData, {
+    headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
+  });
+service.likeScream = screamId =>
+  firebase.get(`/scream/${screamId}/like`, {
+    headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
+  });
+service.unlikeScream = screamId =>
+  firebase.get(`/scream/${screamId}/unlike`, {
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
 

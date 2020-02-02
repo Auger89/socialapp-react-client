@@ -12,6 +12,21 @@ const UserProvider = ({ children }) => {
   const [loadingUserData, setLoadingUserData] = useState(false);
   const isExpired = token => token.exp * 1000 < Date.now();
 
+  const updateAddUserLikes = screamId => {
+    const updatedLikes = [
+      ...userData.likes,
+      { userHandle: userData.credentials.handle, screamId }
+    ];
+    setUserData({ ...userData, likes: updatedLikes });
+  };
+
+  const updateRemoveUserLikes = screamId => {
+    const updatedLikes = userData.likes.filter(
+      like => like.screamId === screamId
+    );
+    setUserData({ ...userData, likes: updatedLikes });
+  };
+
   const getUserData = async () => {
     setLoadingUserData(true);
 
@@ -97,7 +112,9 @@ const UserProvider = ({ children }) => {
         authenticated,
         login,
         signup,
-        logout
+        logout,
+        updateAddUserLikes,
+        updateRemoveUserLikes
       }}
     >
       {children}

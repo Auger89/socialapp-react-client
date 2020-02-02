@@ -11,6 +11,7 @@ import AuthRoute from './components/AuthRoute';
 import './App.css';
 import materialTheme from './utils/theme';
 import { UserProvider } from './contexts/userContext';
+import { ScreamsProvider } from './contexts/screamsContext';
 
 const Container = styled.div`
   margin: 80px auto 0;
@@ -21,9 +22,11 @@ const App = () => (
   <div className="App">
     <ThemeProvider theme={materialTheme}>
       <UserProvider>
-        <CssBaseline />
-        <Navbar />
-        <AppContent />
+        <ScreamsProvider>
+          <CssBaseline />
+          <Navbar />
+          <AppContent />
+        </ScreamsProvider>
       </UserProvider>
     </ThemeProvider>
   </div>

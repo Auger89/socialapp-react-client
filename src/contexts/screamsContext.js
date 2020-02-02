@@ -5,20 +5,45 @@ import service from '../services';
 const ScreamsContext = createContext();
 
 const ScreamsProvider = ({ children }) => {
-  const [screams, setScreams] = useState();
-  const [loading, setLoading] = useState();
+  const [screams, setScreams] = useState([]);
+  const [loadingScreams, setLoadingScreams] = useState();
+
+  const updateScreamLikes = (id, amount) => {
+    const updatedScreams = screams.map(scream => {
+      if (scream.id === id) {
+        return { ...scream, likeCount: scream.likeCount + amount };
+      }
+      return scream;
+    });
+    setScreams(updatedScreams);
+  };
 
   const getScreams = () => {
-    setLoading(true);
+    setLoadingScreams(true);
     service
       .getScreams()
       .then(res => setScreams(res.data))
       .catch(err => console.log(err))
-      .finally(() => setLoading(false));
+      .finally(() => setLoadingScreams(false));
   };
 
-  const likeScream = () => {};
-  const unlikeScream = () => {};
+  const likeScream = screamId => {
+    service
+      .likeScream(screamId)
+      .then(() => {
+        updateScreamLikes(screamId, 1);
+      })
+      .catch(err => console.log(err));
+  };
+
+  const unlikeScream = screamId => {
+    service
+      .unlikeScream(screamId)
+      .then(() => {
+        updateScreamLikes(screamId, -1);
+      })
+      .catch(err => console.log(err));
+  };
 
   // In order to execute an async function in a hook, we must create it inside (scoped)
   useEffect(() => {
@@ -28,7 +53,7 @@ const ScreamsProvider = ({ children }) => {
     getAllScreams();
   }, []);
 
-  const value = { screams, loading, likeScream, unlikeScream };
+  const value = { screams, loadingScreams, likeScream, unlikeScream };
   return (
     <ScreamsContext.Provider value={value}>{children}</ScreamsContext.Provider>
   );
