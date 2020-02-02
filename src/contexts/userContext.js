@@ -22,7 +22,7 @@ const UserProvider = ({ children }) => {
 
   const updateRemoveUserLikes = screamId => {
     const updatedLikes = userData.likes.filter(
-      like => like.screamId === screamId
+      like => like.screamId !== screamId
     );
     setUserData({ ...userData, likes: updatedLikes });
   };

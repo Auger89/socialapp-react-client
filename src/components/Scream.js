@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Link } from '@reach/router';
@@ -12,8 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import ChatIcon from '@material-ui/icons/Chat';
-import LikeBorderIcon from '@material-ui/icons/FavoriteBorder';
-import LikeIcon from '@material-ui/icons/Favorite';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useUser } from '../contexts/userContext';
 import { useScreams } from '../contexts/screamsContext';
@@ -49,6 +47,7 @@ const Scream = ({ data }) => {
     updateAddUserLikes,
     updateRemoveUserLikes
   } = useUser();
+  const [isLiked, setIsLiked] = useState(false);
   const { likeScream, unlikeScream } = useScreams();
 
   const like = async () => {
@@ -59,11 +58,20 @@ const Scream = ({ data }) => {
     await unlikeScream(id);
     updateRemoveUserLikes(id);
   };
-  const isAlreadyLiked =
-    userData &&
-    userData.likes &&
-    userData.likes.find(({ screamId }) => screamId === id);
 
+  useEffect(() => {
+    if (
+      userData &&
+      userData.likes &&
+      userData.likes.find(({ screamId }) => screamId === id)
+    ) {
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
+  }, [userData, id]);
+
+  console.log(`scream ${id} already liked?: ${isLiked}`);
   dayjs.extend(relativeTime);
   return (
     <CardWrapper>
@@ -83,7 +91,7 @@ const Scream = ({ data }) => {
         <Typography variant="body1">{body}</Typography>
         <LikeButton
           authenticated={authenticated}
-          active={isAlreadyLiked}
+          active={isLiked}
           like={like}
           unlike={unlike}
         />
