@@ -38,6 +38,7 @@ const UserProvider = ({ children }) => {
     } finally {
       setLoadingUserData(false);
     }
+    console.log('userData: ', userData);
   };
 
   const logout = () => {
@@ -99,8 +100,6 @@ const UserProvider = ({ children }) => {
     };
     authenticateAndGetUserData();
   }, []);
-
-  console.log('userData: ', userData);
 
   return (
     <UserContext.Provider

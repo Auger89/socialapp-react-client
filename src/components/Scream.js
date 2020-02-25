@@ -16,8 +16,10 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useUser } from '../contexts/userContext';
 import { useScreams } from '../contexts/screamsContext';
 import LikeButton from './LikeButton';
+import DeleteButton from './DeleteButton';
 
 const CardWrapper = styled(Card)`
+  position: relative;
   display: flex;
   margin-bottom: 20px;
 `;
@@ -47,8 +49,8 @@ const Scream = ({ data }) => {
     updateAddUserLikes,
     updateRemoveUserLikes
   } = useUser();
-  const [isLiked, setIsLiked] = useState(false);
   const { likeScream, unlikeScream } = useScreams();
+  const [isLiked, setIsLiked] = useState(false);
 
   const like = async () => {
     await likeScream(id);
@@ -59,17 +61,14 @@ const Scream = ({ data }) => {
     updateRemoveUserLikes(id);
   };
 
+  const { credentials, likes } = userData || {};
   useEffect(() => {
-    if (
-      userData &&
-      userData.likes &&
-      userData.likes.find(({ screamId }) => screamId === id)
-    ) {
+    if (likes && likes.find(({ screamId }) => screamId === id)) {
       setIsLiked(true);
     } else {
       setIsLiked(false);
     }
-  }, [userData, id]);
+  }, [likes, id]);
 
   console.log(`scream ${id} already liked?: ${isLiked}`);
   dayjs.extend(relativeTime);
@@ -85,6 +84,9 @@ const Scream = ({ data }) => {
         >
           {userHandle}
         </Typography>
+        {authenticated && credentials && credentials.handle === userHandle && (
+          <DeleteButton screamId={id} />
+        )}
         <Typography variant="body2" color="textSecondary">
           {dayjs(createdAt).fromNow()}
         </Typography>
@@ -96,7 +98,7 @@ const Scream = ({ data }) => {
           unlike={unlike}
         />
         <span>{`${likeCount} likes`}</span>
-        <Tooltip title="Edit profile picture" placement="top">
+        <Tooltip title="Comments" placement="top">
           <IconButton>
             <ChatIcon color="primary" />
           </IconButton>
