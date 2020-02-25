@@ -35,5 +35,9 @@ service.unlikeScream = screamId =>
   firebase.get(`/scream/${screamId}/unlike`, {
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
+service.deleteScream = screamId =>
+  firebase.delete(`/scream/${screamId}`, {
+    headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
+  });
 
 export default service;

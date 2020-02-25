@@ -45,6 +45,16 @@ const ScreamsProvider = ({ children }) => {
       .catch(err => console.log(err));
   };
 
+  const deleteScream = screamId => {
+    service
+      .deleteScream(screamId)
+      .then(() => {
+        const updatedScreams = screams.filter(scream => scream.id !== screamId);
+        setScreams(updatedScreams);
+      })
+      .catch(err => console.log(err));
+  };
+
   // In order to execute an async function in a hook, we must create it inside (scoped)
   useEffect(() => {
     const getAllScreams = async () => {
@@ -53,7 +63,13 @@ const ScreamsProvider = ({ children }) => {
     getAllScreams();
   }, []);
 
-  const value = { screams, loadingScreams, likeScream, unlikeScream };
+  const value = {
+    screams,
+    loadingScreams,
+    likeScream,
+    unlikeScream,
+    deleteScream
+  };
   return (
     <ScreamsContext.Provider value={value}>{children}</ScreamsContext.Provider>
   );
