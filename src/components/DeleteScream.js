@@ -10,13 +10,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import { useScreams } from '../contexts/screamsContext';
 
-const DeleteIconButton = styled(IconButton)`
+const DeleteButton = styled(IconButton)`
   position: absolute;
   top: 10%;
   left: 90%;
 `;
 
-const DeleteButton = ({ screamId }) => {
+const DeleteScream = ({ screamId }) => {
   const [open, setOpen] = useState(false);
   const { deleteScream } = useScreams();
 
@@ -28,9 +28,9 @@ const DeleteButton = ({ screamId }) => {
   return (
     <>
       <Tooltip title="Delete Scream" placement="top">
-        <DeleteIconButton onClick={() => setOpen(true)}>
+        <DeleteButton onClick={() => setOpen(true)}>
           <DeleteIcon color="secondary" />
-        </DeleteIconButton>
+        </DeleteButton>
       </Tooltip>
       <Dialog
         open={open}
@@ -52,8 +52,8 @@ const DeleteButton = ({ screamId }) => {
   );
 };
 
-DeleteButton.propTypes = {
+DeleteScream.propTypes = {
   screamId: PropTypes.string.isRequired
 };
 
-export default DeleteButton;
+export default DeleteScream;

@@ -16,7 +16,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useUser } from '../contexts/userContext';
 import { useScreams } from '../contexts/screamsContext';
 import LikeButton from './LikeButton';
-import DeleteButton from './DeleteButton';
+import DeleteScream from './DeleteScream';
 
 const CardWrapper = styled(Card)`
   position: relative;
@@ -85,7 +85,7 @@ const Scream = ({ data }) => {
           {userHandle}
         </Typography>
         {authenticated && credentials && credentials.handle === userHandle && (
-          <DeleteButton screamId={id} />
+          <DeleteScream screamId={id} />
         )}
         <Typography variant="body2" color="textSecondary">
           {dayjs(createdAt).fromNow()}
