@@ -7,6 +7,7 @@ const ScreamsContext = createContext();
 const ScreamsProvider = ({ children }) => {
   const [screams, setScreams] = useState([]);
   const [loadingScreams, setLoadingScreams] = useState();
+  const [loadingPostScream, setLoadingPostScream] = useState();
 
   const updateScreamLikes = (id, amount) => {
     const updatedScreams = screams.map(scream => {
@@ -18,13 +19,16 @@ const ScreamsProvider = ({ children }) => {
     setScreams(updatedScreams);
   };
 
-  const getScreams = () => {
+  const getScreams = async () => {
     setLoadingScreams(true);
-    service
-      .getScreams()
-      .then(res => setScreams(res.data))
-      .catch(err => console.log(err))
-      .finally(() => setLoadingScreams(false));
+    try {
+      const response = await service.getScreams();
+      setScreams(response.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingScreams(false);
+    }
   };
 
   const likeScream = screamId => {
@@ -55,6 +59,22 @@ const ScreamsProvider = ({ children }) => {
       .catch(err => console.log(err));
   };
 
+  const postScream = async newScream => {
+    let errors;
+    setLoadingPostScream(true);
+
+    try {
+      const response = await service.postScream({ body: newScream });
+      setScreams([response.data, ...screams]);
+    } catch (err) {
+      console.log(err.toJSON());
+      errors = err.response.data;
+    }
+
+    setLoadingPostScream(false);
+    return errors;
+  };
+
   // In order to execute an async function in a hook, we must create it inside (scoped)
   useEffect(() => {
     const getAllScreams = async () => {
@@ -66,9 +86,11 @@ const ScreamsProvider = ({ children }) => {
   const value = {
     screams,
     loadingScreams,
+    loadingPostScream,
     likeScream,
     unlikeScream,
-    deleteScream
+    deleteScream,
+    postScream
   };
   return (
     <ScreamsContext.Provider value={value}>{children}</ScreamsContext.Provider>
