@@ -39,5 +39,9 @@ service.deleteScream = screamId =>
   firebase.delete(`/scream/${screamId}`, {
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
+service.postScream = newScream =>
+  firebase.post('/scream', newScream, {
+    headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
+  });
 
 export default service;
