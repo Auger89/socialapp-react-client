@@ -68,7 +68,7 @@ const UserProvider = ({ children }) => {
       await authenticate();
     } catch (err) {
       console.log(err.toJSON());
-      errors = err.response.data;
+      errors = err.response && err.response.data;
     }
     return errors;
   };

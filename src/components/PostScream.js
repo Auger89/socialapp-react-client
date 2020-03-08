@@ -14,7 +14,8 @@ import { useScreams } from '../contexts/screamsContext';
 
 const SubmitButton = styled(Button)`
   position: relative;
-  margin-top: 16px;
+  float: right;
+  margin-top: 10px;
 `;
 
 const LoadingSpinner = styled(CircularProgress)`
@@ -23,8 +24,8 @@ const LoadingSpinner = styled(CircularProgress)`
 
 const CloseButton = styled(IconButton)`
   position: absolute;
-  left: 90%;
-  top: 10%;
+  left: 91%;
+  top: 6%;
 `;
 
 const PostScream = () => {
