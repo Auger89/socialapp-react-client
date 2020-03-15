@@ -4,8 +4,6 @@ import styled from '@emotion/styled';
 import { Link } from '@reach/router';
 import dayjs from 'dayjs';
 import Card from '@material-ui/core/Card';
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +15,7 @@ import { useUser } from '../contexts/userContext';
 import { useScreams } from '../contexts/screamsContext';
 import LikeButton from './LikeButton';
 import DeleteScream from './DeleteScream';
+import ScreamDialog from './ScreamDialog';
 
 const CardWrapper = styled(Card)`
   position: relative;
@@ -70,7 +69,6 @@ const Scream = ({ data }) => {
     }
   }, [likes, id]);
 
-  console.log(`scream ${id} already liked?: ${isLiked}`);
   dayjs.extend(relativeTime);
   return (
     <CardWrapper>
@@ -104,6 +102,7 @@ const Scream = ({ data }) => {
           </IconButton>
         </Tooltip>
         <span>{`${commentCount} comments`}</span>
+        <ScreamDialog id={id} userHandle={userHandle} />
       </CardSpace>
     </CardWrapper>
   );
