@@ -4,13 +4,10 @@ import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import { Link } from '@reach/router';
 import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
@@ -29,16 +26,25 @@ const ProfileImage = styled.img`
   object-fit: cover;
 `;
 
-const ExpandButton = styled(IconButton)``;
+const ExpandButton = styled(IconButton)`
+  position: absolute;
+  left: 90%;
+`;
 
 const CloseButton = styled(IconButton)`
   position: absolute;
-  left: 91%;
-  top: 6%;
+  left: 90%;
+  top: 5%;
 `;
 
 const ScreamContent = styled(DialogContent)`
   padding: 20px;
+`;
+
+const LoadingContainer = styled.div`
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
 `;
 
 const ScreamDialog = ({ id, userHandle }) => {
@@ -77,8 +83,11 @@ const ScreamDialog = ({ id, userHandle }) => {
         </Tooltip>
         <ScreamContent>
           {loading ? (
-            <CircularProgress size={200} />
+            <LoadingContainer>
+              <CircularProgress size={200} thickness={2} />
+            </LoadingContainer>
           ) : (
+            // TODO Add error display
             <Grid container spacing={16}>
               <Grid item sm={5}>
                 <ProfileImage src={data.userImage} alt="Profile" />
