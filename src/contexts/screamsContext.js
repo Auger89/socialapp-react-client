@@ -82,7 +82,7 @@ const ScreamsProvider = ({ children }) => {
     } catch (err) {
       console.log(err);
     }
-    return response.data;
+    return response && response.data;
   };
 
   // In order to execute an async function in a hook, we must create it inside (scoped)
