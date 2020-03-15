@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Link } from '@reach/router';
@@ -12,7 +12,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ChatIcon from '@material-ui/icons/Chat';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useUser } from '../contexts/userContext';
-import { useScreams } from '../contexts/screamsContext';
 import LikeButton from './LikeButton';
 import DeleteScream from './DeleteScream';
 import ScreamDialog from './ScreamDialog';
@@ -42,32 +41,8 @@ const Scream = ({ data }) => {
     userHandle,
     userImage
   } = data;
-  const {
-    userData,
-    authenticated,
-    updateAddUserLikes,
-    updateRemoveUserLikes
-  } = useUser();
-  const { likeScream, unlikeScream } = useScreams();
-  const [isLiked, setIsLiked] = useState(false);
-
-  const like = async () => {
-    await likeScream(id);
-    updateAddUserLikes(id);
-  };
-  const unlike = async () => {
-    await unlikeScream(id);
-    updateRemoveUserLikes(id);
-  };
-
-  const { credentials, likes } = userData || {};
-  useEffect(() => {
-    if (likes && likes.find(({ screamId }) => screamId === id)) {
-      setIsLiked(true);
-    } else {
-      setIsLiked(false);
-    }
-  }, [likes, id]);
+  const { userData, authenticated } = useUser();
+  const { credentials } = userData || {};
 
   dayjs.extend(relativeTime);
   return (
@@ -89,12 +64,7 @@ const Scream = ({ data }) => {
           {dayjs(createdAt).fromNow()}
         </Typography>
         <Typography variant="body1">{body}</Typography>
-        <LikeButton
-          authenticated={authenticated}
-          active={isLiked}
-          like={like}
-          unlike={unlike}
-        />
+        <LikeButton id={id} />
         <span>{`${likeCount} likes`}</span>
         <Tooltip title="Comments" placement="top">
           <IconButton>

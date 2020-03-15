@@ -61,7 +61,7 @@ const ScreamDialog = ({ id, userHandle }) => {
     const getScreamById = async screamId => {
       setLoading(true);
       const response = await getScream(screamId);
-      setData(response);
+      if (response) setData(response);
       setLoading(false);
     };
 
