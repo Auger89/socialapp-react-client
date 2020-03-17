@@ -12,7 +12,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
+import ChatIcon from '@material-ui/icons/Chat';
 import { useScreams } from '../contexts/screamsContext';
+import LikeButton from './LikeButton';
 
 const Separator = styled.hr`
   border: none;
@@ -55,6 +57,12 @@ const ScreamDialog = ({ id, userHandle }) => {
 
   const close = () => {
     setOpen(false);
+  };
+
+  const updateLikes = amount => {
+    if (data) {
+      setData({ ...data, likeCount: data.likeCount + amount });
+    }
   };
 
   useEffect(() => {
@@ -107,6 +115,14 @@ const ScreamDialog = ({ id, userHandle }) => {
                 </Typography>
                 <Separator />
                 <Typography variant="body1">{data.body}</Typography>
+                <LikeButton id={id} afterPush={updateLikes} />
+                <span>{`${data.likeCount} likes`}</span>
+                <Tooltip title="Comments" placement="top">
+                  <IconButton>
+                    <ChatIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
+                <span>{`${data.commentCount} comments`}</span>
               </Grid>
             </Grid>
           )}

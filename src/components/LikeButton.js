@@ -8,7 +8,7 @@ import LikeIcon from '@material-ui/icons/Favorite';
 import { useUser } from '../contexts/userContext';
 import { useScreams } from '../contexts/screamsContext';
 
-const LikeButton = ({ id }) => {
+const LikeButton = ({ id, afterPush }) => {
   const [isLiked, setIsLiked] = useState(false);
   const {
     userData,
@@ -32,10 +32,12 @@ const LikeButton = ({ id }) => {
   const like = async () => {
     await likeScream(id);
     updateAddUserLikes(id);
+    afterPush(1);
   };
   const unlike = async () => {
     await unlikeScream(id);
     updateRemoveUserLikes(id);
+    afterPush(-1);
   };
   if (!authenticated) {
     return (
@@ -67,7 +69,12 @@ const LikeButton = ({ id }) => {
 };
 
 LikeButton.propTypes = {
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  afterPush: PropTypes.func
+};
+
+LikeButton.defaultProps = {
+  afterPush: () => {}
 };
 
 export default LikeButton;
