@@ -6,7 +6,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Navbar from './components/Navbar';
+import Navbar from './components/layout/Navbar';
 import AuthRoute from './components/AuthRoute';
 import './App.css';
 import materialTheme from './utils/theme';

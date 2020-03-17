@@ -8,8 +8,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import { useUser } from '../contexts/userContext';
-import PostScream from './PostScream';
+import { useUser } from '../../contexts/userContext';
+import PostScream from '../scream/PostScream';
 
 const StyledToolBar = styled(Toolbar)`
   justify-content: center;

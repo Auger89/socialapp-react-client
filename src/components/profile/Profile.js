@@ -14,8 +14,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 import dayjs from 'dayjs';
 import EditDetails from './EditDetails';
-import { useUser } from '../contexts/userContext';
-import service from '../services';
+import { useUser } from '../../contexts/userContext';
+import service from '../../services';
 
 const StyledPaper = styled(Paper)`
   padding: 20px;

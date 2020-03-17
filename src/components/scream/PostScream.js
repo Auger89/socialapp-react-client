@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
-import { useScreams } from '../contexts/screamsContext';
+import { useScreams } from '../../contexts/screamsContext';
 
 const SubmitButton = styled(Button)`
   position: relative;

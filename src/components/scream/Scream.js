@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import ChatIcon from '@material-ui/icons/Chat';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useUser } from '../contexts/userContext';
+import { useUser } from '../../contexts/userContext';
 import LikeButton from './LikeButton';
 import DeleteScream from './DeleteScream';
 import ScreamDialog from './ScreamDialog';

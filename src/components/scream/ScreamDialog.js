@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
-import { useScreams } from '../contexts/screamsContext';
+import { useScreams } from '../../contexts/screamsContext';
 import LikeButton from './LikeButton';
 
 const Separator = styled.hr`
@@ -91,6 +91,7 @@ const ScreamDialog = ({ id, userHandle }) => {
         </Tooltip>
         <ScreamContent>
           {loading ? (
+            // TODO Add skeleton loader
             <LoadingContainer>
               <CircularProgress size={200} thickness={2} />
             </LoadingContainer>

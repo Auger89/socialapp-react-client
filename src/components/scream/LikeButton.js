@@ -5,8 +5,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import LikeBorderIcon from '@material-ui/icons/FavoriteBorder';
 import LikeIcon from '@material-ui/icons/Favorite';
-import { useUser } from '../contexts/userContext';
-import { useScreams } from '../contexts/screamsContext';
+import { useUser } from '../../contexts/userContext';
+import { useScreams } from '../../contexts/screamsContext';
 
 const LikeButton = ({ id, afterClick }) => {
   const [isLiked, setIsLiked] = useState(false);

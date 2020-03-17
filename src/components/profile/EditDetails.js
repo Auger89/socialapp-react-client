@@ -9,7 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import EditIcon from '@material-ui/icons/Edit';
-import { useUser } from '../contexts/userContext';
+import { useUser } from '../../contexts/userContext';
 
 const StyledIconButton = styled(IconButton)`
   float: right;

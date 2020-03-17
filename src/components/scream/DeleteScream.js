@@ -8,7 +8,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
-import { useScreams } from '../contexts/screamsContext';
+import { useScreams } from '../../contexts/screamsContext';
 
 const DeleteButton = styled(IconButton)`
   position: absolute;
