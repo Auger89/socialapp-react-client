@@ -115,7 +115,7 @@ const ScreamDialog = ({ id, userHandle }) => {
                 </Typography>
                 <Separator />
                 <Typography variant="body1">{data.body}</Typography>
-                <LikeButton id={id} afterPush={updateLikes} />
+                <LikeButton id={id} afterClick={updateLikes} />
                 <span>{`${data.likeCount} likes`}</span>
                 <Tooltip title="Comments" placement="top">
                   <IconButton>
