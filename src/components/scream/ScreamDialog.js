@@ -15,11 +15,8 @@ import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
 import { useScreams } from '../../contexts/screamsContext';
 import LikeButton from './LikeButton';
-
-const Separator = styled.hr`
-  border: none;
-  margin: 4px;
-`;
+import Comments from './Comments';
+import { Separator, VisibleSeparator } from '../common';
 
 const ProfileImage = styled.img`
   max-width: 200px;
@@ -127,6 +124,8 @@ const ScreamDialog = ({ id, userHandle }) => {
               </Grid>
             </Grid>
           )}
+          <VisibleSeparator />
+          <Comments comments={data.comments || []} />
         </ScreamContent>
       </Dialog>
     </>
