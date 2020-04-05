@@ -21,7 +21,6 @@ import Comments from './Comments'; */
 
 const UserImage = styled.img`
   max-width: 100%;
-  height: 100%;
   object-fit: cover;
   border-radius: 50%;
 `;
@@ -35,7 +34,10 @@ const Comments = ({ comments }) => (
     {comments.map((comment, index) => {
       const { body, createdAt, userImage, userHandle } = comment;
       return (
-        <>
+        <div
+          key={`${userHandle}_
+        ${createdAt}`}
+        >
           <Grid item sm={12}>
             <Grid container>
               <Grid item sm={2}>
@@ -61,7 +63,7 @@ const Comments = ({ comments }) => (
             </Grid>
           </Grid>
           {index !== comments.length - 1 && <VisibleSeparator />}
-        </>
+        </div>
       );
     })}
   </Grid>
