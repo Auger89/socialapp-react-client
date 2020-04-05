@@ -16,11 +16,12 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { useScreams } from '../../contexts/screamsContext';
 import LikeButton from './LikeButton';
 import Comments from './Comments';
+import CommentForm from './CommentForm';
 import { Separator, VisibleSeparator } from '../common';
 
 const ProfileImage = styled.img`
   max-width: 200px;
-  height: 200px;
+  max-height: 200px;
   border-radius: 50%;
   object-fit: cover;
 `;
@@ -62,6 +63,12 @@ const ScreamDialog = ({ id, userHandle }) => {
     }
   };
 
+  const updateComments = comment => {
+    if (data) {
+      setData({ ...data, comments: [comment, ...data.comments] });
+    }
+  };
+
   useEffect(() => {
     const getScreamById = async screamId => {
       setLoading(true);
@@ -94,7 +101,7 @@ const ScreamDialog = ({ id, userHandle }) => {
             </LoadingContainer>
           ) : (
             // TODO Add error display
-            <Grid container spacing={16}>
+            <Grid container spacing={4}>
               <Grid item sm={5}>
                 <ProfileImage src={data.userImage} alt="Profile" />
               </Grid>
@@ -125,6 +132,7 @@ const ScreamDialog = ({ id, userHandle }) => {
             </Grid>
           )}
           <VisibleSeparator />
+          <CommentForm id={id} afterSubmit={updateComments} />
           <Comments comments={data.comments || []} />
         </ScreamContent>
       </Dialog>

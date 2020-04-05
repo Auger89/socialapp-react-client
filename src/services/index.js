@@ -44,5 +44,9 @@ service.postScream = newScream =>
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
 service.getScream = screamId => firebase.get(`/scream/${screamId}`);
+service.submitComment = (screamId, comment) =>
+  firebase.post(`/scream/${screamId}/comment`, comment, {
+    headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
+  });
 
 export default service;
