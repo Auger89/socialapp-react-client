@@ -77,13 +77,13 @@ const EditButton = styled(IconButton)`
 
 const Profile = () => {
   const {
-    userData,
+    userDetails,
     getUser,
     loadingUserData,
     logout,
     authenticated
   } = useUser();
-  const { credentials } = userData || {};
+  const { credentials } = userDetails || {};
   const { handle, createdAt, imageUrl, bio, website, location } =
     credentials || {};
   const imageInput = useRef();

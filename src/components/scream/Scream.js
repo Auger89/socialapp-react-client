@@ -41,8 +41,8 @@ const Scream = ({ data }) => {
     userHandle,
     userImage
   } = data;
-  const { userData, authenticated } = useUser();
-  const { credentials } = userData || {};
+  const { userDetails, authenticated } = useUser();
+  const { credentials } = userDetails || {};
 
   dayjs.extend(relativeTime);
   return (

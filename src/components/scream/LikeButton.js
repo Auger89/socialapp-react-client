@@ -11,13 +11,13 @@ import { useScreams } from '../../contexts/screamsContext';
 const LikeButton = ({ id, afterClick }) => {
   const [isLiked, setIsLiked] = useState(false);
   const {
-    userData,
+    userDetails,
     authenticated,
     updateAddUserLikes,
     updateRemoveUserLikes
   } = useUser();
   const { likeScream, unlikeScream } = useScreams();
-  const { likes: userLikes } = userData || {};
+  const { likes: userLikes } = userDetails || {};
 
   // TODO Add loading when waiting for request response
 

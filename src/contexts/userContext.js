@@ -8,23 +8,24 @@ const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
+  const [userScreams, setUserScrams] = useState(null);
   const [loadingUserData, setLoadingUserData] = useState(false);
   const isExpired = token => token.exp * 1000 < Date.now();
 
   const updateAddUserLikes = screamId => {
     const updatedLikes = [
-      ...userData.likes,
-      { userHandle: userData.credentials.handle, screamId }
+      ...userDetails.likes,
+      { userHandle: userDetails.credentials.handle, screamId }
     ];
-    setUserData({ ...userData, likes: updatedLikes });
+    setUserDetails({ ...userDetails, likes: updatedLikes });
   };
 
   const updateRemoveUserLikes = screamId => {
-    const updatedLikes = userData.likes.filter(
+    const updatedLikes = userDetails.likes.filter(
       like => like.screamId !== screamId
     );
-    setUserData({ ...userData, likes: updatedLikes });
+    setUserDetails({ ...userDetails, likes: updatedLikes });
   };
 
   const getUser = async () => {
@@ -32,19 +33,19 @@ const UserProvider = ({ children }) => {
 
     try {
       const response = await service.getUser();
-      setUserData(response.data);
+      setUserDetails(response.data);
     } catch (err) {
       console.log(err.toJSON());
     } finally {
       setLoadingUserData(false);
     }
-    console.log('userData: ', userData);
+    console.log('userDetails: ', userDetails);
   };
 
   const logout = () => {
     localStorage.removeItem(FIREBASE_ID_TOKEN);
     setAuthenticated(false);
-    setUserData(null);
+    setUserDetails(null);
   };
 
   const authenticate = async () => {
@@ -86,11 +87,23 @@ const UserProvider = ({ children }) => {
     return errors;
   };
 
-  const editUserDetails = userDetails => {
+  const editUserDetails = details => {
     service
-      .editUserDetails(userDetails)
+      .editUserDetails(details)
       .then(getUser)
       .catch(err => console.log(err));
+  };
+
+  const getUserData = async userHandle => {
+    setLoadingUserData(true);
+    try {
+      const response = await service.getUserData(userHandle);
+      if (response && response.data) setUserScrams(response.data.screams);
+    } catch (err) {
+      setUserScrams(null);
+    } finally {
+      setLoadingUserData(false);
+    }
   };
 
   // In order to execute an async function in a hook, we must create it inside (scoped)
@@ -104,7 +117,7 @@ const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        userData,
+        userDetails,
         getUser,
         editUserDetails,
         loadingUserData,
@@ -113,7 +126,9 @@ const UserProvider = ({ children }) => {
         signup,
         logout,
         updateAddUserLikes,
-        updateRemoveUserLikes
+        updateRemoveUserLikes,
+        getUserData,
+        userScreams
       }}
     >
       {children}

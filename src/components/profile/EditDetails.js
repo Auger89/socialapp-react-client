@@ -20,10 +20,10 @@ const EditDetails = () => {
   const [website, setWebsite] = useState('');
   const [location, setLocation] = useState('');
   const [open, setOpen] = useState(false);
-  const { userData, editUserDetails } = useUser();
-  const { credentials } = userData || {};
+  const { userDetails, editUserDetails } = useUser();
+  const { credentials } = userDetails || {};
 
-  const mapUserDataToState = () => {
+  const mapUserDetailsToState = () => {
     setBio(credentials.bio || '');
     setWebsite(credentials.website || '');
     setLocation(credentials.location || '');
@@ -31,7 +31,7 @@ const EditDetails = () => {
 
   const handleOpen = () => {
     setOpen(true);
-    mapUserDataToState();
+    mapUserDetailsToState();
   };
 
   const handleSumbit = () => {
@@ -40,7 +40,7 @@ const EditDetails = () => {
   };
 
   useEffect(() => {
-    if (credentials) mapUserDataToState();
+    if (credentials) mapUserDetailsToState();
   }, [credentials]);
 
   return (
