@@ -27,11 +27,11 @@ const UserProvider = ({ children }) => {
     setUserData({ ...userData, likes: updatedLikes });
   };
 
-  const getUserData = async () => {
+  const getUser = async () => {
     setLoadingUserData(true);
 
     try {
-      const response = await service.getUserData();
+      const response = await service.getUser();
       setUserData(response.data);
     } catch (err) {
       console.log(err.toJSON());
@@ -55,7 +55,7 @@ const UserProvider = ({ children }) => {
         logout();
       } else {
         setAuthenticated(true);
-        await getUserData();
+        await getUser();
       }
     }
   };
@@ -89,23 +89,23 @@ const UserProvider = ({ children }) => {
   const editUserDetails = userDetails => {
     service
       .editUserDetails(userDetails)
-      .then(getUserData)
+      .then(getUser)
       .catch(err => console.log(err));
   };
 
   // In order to execute an async function in a hook, we must create it inside (scoped)
   useEffect(() => {
-    const authenticateAndGetUserData = async () => {
+    const authenticateAndGetUser = async () => {
       await authenticate();
     };
-    authenticateAndGetUserData();
+    authenticateAndGetUser();
   }, []);
 
   return (
     <UserContext.Provider
       value={{
         userData,
-        getUserData,
+        getUser,
         editUserDetails,
         loadingUserData,
         authenticated,

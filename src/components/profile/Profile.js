@@ -78,7 +78,7 @@ const EditButton = styled(IconButton)`
 const Profile = () => {
   const {
     userData,
-    getUserData,
+    getUser,
     loadingUserData,
     logout,
     authenticated
@@ -92,7 +92,7 @@ const Profile = () => {
     const image = event.target.files[0];
     service
       .uploadImage(image)
-      .then(() => getUserData())
+      .then(() => getUser())
       .catch(err => console.log(err));
   };
 
