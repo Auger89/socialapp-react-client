@@ -11,7 +11,7 @@ const service = {};
 service.getScreams = () => firebase.get('/screams');
 service.login = loginData => firebase.post('/login', loginData);
 service.signup = signupData => firebase.post('/signup', signupData);
-service.getUserData = () =>
+service.getUser = () =>
   firebase.get('/user', {
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
@@ -23,8 +23,8 @@ service.uploadImage = image => {
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
 };
-service.editUserDetails = userData =>
-  firebase.post('/user', userData, {
+service.editUserDetails = details =>
+  firebase.post('/user', details, {
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
 service.likeScream = screamId =>
@@ -46,6 +46,10 @@ service.postScream = newScream =>
 service.getScream = screamId => firebase.get(`/scream/${screamId}`);
 service.submitComment = (screamId, comment) =>
   firebase.post(`/scream/${screamId}/comment`, comment, {
+    headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
+  });
+service.getUserData = userHandle =>
+  firebase.get(`/user/${userHandle}`, {
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
 
