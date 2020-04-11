@@ -6,6 +6,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import User from './pages/User';
 import Navbar from './components/layout/Navbar';
 import AuthRoute from './components/AuthRoute';
 import './App.css';
@@ -38,6 +39,7 @@ const AppContent = () => (
       <Home path="/" />
       <AuthRoute use={Login} path="/login" />
       <AuthRoute use={Signup} path="/signup" />
+      <User path="/users/:handle" />
     </Router>
   </Container>
 );

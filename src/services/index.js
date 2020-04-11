@@ -48,9 +48,6 @@ service.submitComment = (screamId, comment) =>
   firebase.post(`/scream/${screamId}/comment`, comment, {
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
-service.getUserData = userHandle =>
-  firebase.get(`/user/${userHandle}`, {
-    headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
-  });
+service.getUserData = userHandle => firebase.get(`/user/${userHandle}`);
 
 export default service;

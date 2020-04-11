@@ -16,6 +16,12 @@ import dayjs from 'dayjs';
 import EditDetails from './EditDetails';
 import { useUser } from '../../contexts/userContext';
 import service from '../../services';
+import {
+  ImageWrapper,
+  ProfileImage,
+  ProfileDetails,
+  ProfileRow
+} from '../common';
 
 const StyledPaper = styled(Paper)`
   padding: 20px;
@@ -26,47 +32,11 @@ const Separator = styled.hr`
   margin: 0 0 10px 0;
 `;
 
-const ImageWrapper = styled.div`
-  text-align: center;
-  position: relative;
-  & button: {
-    position: absolute;
-    top: 80%;
-    left: 70%;
-  }
-`;
-
-const ProfileImage = styled.img`
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  max-width: 100%;
-  border-radius: 50%;
-`;
-
-const ProfileDetails = styled.div`
-  text-align: center;
-  & span, svg: {
-    vertical-align: middle;
-  }
-  & a: {
-    color: #00bcd4;
-  }
-`;
-
 const ButtonsContainer = styled.div`
   text-align: center;
   & a {
     margin: 20px 10px;
   }
-`;
-
-const ProfileRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: fit-content;
-  margin: auto;
 `;
 
 const EditButton = styled(IconButton)`

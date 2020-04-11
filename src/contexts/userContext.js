@@ -9,7 +9,6 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [userDetails, setUserDetails] = useState(null);
-  const [userScreams, setUserScrams] = useState(null);
   const [loadingUserData, setLoadingUserData] = useState(false);
   const isExpired = token => token.exp * 1000 < Date.now();
 
@@ -94,18 +93,6 @@ const UserProvider = ({ children }) => {
       .catch(err => console.log(err));
   };
 
-  const getUserData = async userHandle => {
-    setLoadingUserData(true);
-    try {
-      const response = await service.getUserData(userHandle);
-      if (response && response.data) setUserScrams(response.data.screams);
-    } catch (err) {
-      setUserScrams(null);
-    } finally {
-      setLoadingUserData(false);
-    }
-  };
-
   // In order to execute an async function in a hook, we must create it inside (scoped)
   useEffect(() => {
     const authenticateAndGetUser = async () => {
@@ -126,9 +113,7 @@ const UserProvider = ({ children }) => {
         signup,
         logout,
         updateAddUserLikes,
-        updateRemoveUserLikes,
-        getUserData,
-        userScreams
+        updateRemoveUserLikes
       }}
     >
       {children}
