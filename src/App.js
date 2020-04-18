@@ -40,6 +40,7 @@ const AppContent = () => (
       <AuthRoute use={Login} path="/login" />
       <AuthRoute use={Signup} path="/signup" />
       <User path="/users/:handle" />
+      <User path="/users/:handle/scream/:screamId" />
     </Router>
   </Container>
 );

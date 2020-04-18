@@ -31,7 +31,7 @@ const CardSpace = styled(CardContent)`
   object-fit: cover;
 `;
 
-const Scream = ({ data }) => {
+const Scream = ({ data, openDialog }) => {
   const {
     id,
     body,
@@ -72,7 +72,7 @@ const Scream = ({ data }) => {
           </IconButton>
         </Tooltip>
         <span>{`${commentCount} comments`}</span>
-        <ScreamDialog id={id} userHandle={userHandle} />
+        <ScreamDialog id={id} userHandle={userHandle} openDialog={openDialog} />
       </CardSpace>
     </CardWrapper>
   );
@@ -87,7 +87,12 @@ Scream.propTypes = {
     likeCount: PropTypes.number,
     userHandle: PropTypes.string.isRequired,
     userImage: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  openDialog: PropTypes.bool
+};
+
+Scream.defaultProps = {
+  openDialog: false
 };
 
 export default Scream;

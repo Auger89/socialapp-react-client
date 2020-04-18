@@ -19,6 +19,7 @@
     "operator-linebreak": ["error", "after"],
     "object-curly-newline": ["error", { "consistent": true }],
     "react/jsx-props-no-spreading": "off",
-    "no-confusing-arrow": "off"
+    "no-confusing-arrow": "off",
+    "function-paren-newline": "off"
   }
 }

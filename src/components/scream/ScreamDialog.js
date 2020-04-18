@@ -47,7 +47,7 @@ const LoadingContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const ScreamDialog = ({ id, userHandle }) => {
+const ScreamDialog = ({ id, userHandle, openDialog }) => {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -79,6 +79,10 @@ const ScreamDialog = ({ id, userHandle }) => {
 
     getScreamById(id);
   }, [id]);
+
+  useEffect(() => {
+    if (openDialog) setOpen(true);
+  }, [openDialog]);
 
   return (
     <>
@@ -142,7 +146,12 @@ const ScreamDialog = ({ id, userHandle }) => {
 
 ScreamDialog.propTypes = {
   id: PropTypes.string.isRequired,
-  userHandle: PropTypes.string.isRequired
+  userHandle: PropTypes.string.isRequired,
+  openDialog: PropTypes.bool
+};
+
+ScreamDialog.defaultProps = {
+  openDialog: false
 };
 
 export default ScreamDialog;
