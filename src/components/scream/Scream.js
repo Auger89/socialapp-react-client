@@ -72,7 +72,7 @@ const Scream = ({ data, openDialog }) => {
           </IconButton>
         </Tooltip>
         <span>{`${commentCount} comments`}</span>
-        <ScreamDialog id={id} userHandle={userHandle} openDialog={openDialog} />
+        <ScreamDialog id={id} userHandle={userHandle} isOpen={openDialog} />
       </CardSpace>
     </CardWrapper>
   );

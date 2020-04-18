@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import { Link } from '@reach/router';
+import { Link, useLocation } from '@reach/router';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -47,13 +47,24 @@ const LoadingContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const ScreamDialog = ({ id, userHandle, openDialog }) => {
+const ScreamDialog = ({ id, userHandle, isOpen }) => {
+  const { pathname } = useLocation();
+  const { getScream } = useScreams();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
-  const { getScream } = useScreams();
+  const [userPath, setUserPath] = useState('');
 
-  const close = () => {
+  const openDialog = () => {
+    const newPath = `/users/${userHandle}/scream/${id}`;
+    const oldPath = newPath === pathname ? `/users/${userHandle}` : pathname;
+    window.history.pushState(null, null, newPath);
+    setOpen(true);
+    setUserPath(oldPath);
+  };
+
+  const closeDialog = () => {
+    window.history.pushState(null, null, userPath);
     setOpen(false);
   };
 
@@ -81,19 +92,19 @@ const ScreamDialog = ({ id, userHandle, openDialog }) => {
   }, [id]);
 
   useEffect(() => {
-    if (openDialog) setOpen(true);
-  }, [openDialog]);
+    if (isOpen) openDialog();
+  }, [isOpen]);
 
   return (
     <>
       <Tooltip title="Expand scream" placement="top">
-        <ExpandButton onClick={() => setOpen(true)}>
+        <ExpandButton onClick={openDialog}>
           <UnfoldMoreIcon color="primary" />
         </ExpandButton>
       </Tooltip>
-      <Dialog open={open} onClose={close} fullWidth maxWidth="sm">
+      <Dialog open={open} onClose={closeDialog} fullWidth maxWidth="sm">
         <Tooltip title="Close" placement="top">
-          <CloseButton onClick={close}>
+          <CloseButton onClick={closeDialog}>
             <CloseIcon />
           </CloseButton>
         </Tooltip>
@@ -147,11 +158,11 @@ const ScreamDialog = ({ id, userHandle, openDialog }) => {
 ScreamDialog.propTypes = {
   id: PropTypes.string.isRequired,
   userHandle: PropTypes.string.isRequired,
-  openDialog: PropTypes.bool
+  isOpen: PropTypes.bool
 };
 
 ScreamDialog.defaultProps = {
-  openDialog: false
+  isOpen: false
 };
 
 export default ScreamDialog;
