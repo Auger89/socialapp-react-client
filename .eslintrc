@@ -16,7 +16,11 @@
     "linebreak-style": "off",
     "import/no-extraneous-dependencies": "off",
     "arrow-parens": ["error", "as-needed"],
-    "operator-linebreak": ["error", "after"],
+    "operator-linebreak": [
+      "error",
+      "after",
+      { "overrides": { "?": "before", ":": "before" } }
+    ],
     "object-curly-newline": ["error", { "consistent": true }],
     "react/jsx-props-no-spreading": "off",
     "no-confusing-arrow": "off",
