@@ -38,7 +38,6 @@ const UserProvider = ({ children }) => {
     } finally {
       setLoadingUserData(false);
     }
-    console.log('userDetails: ', userDetails);
   };
 
   const logout = () => {
@@ -93,6 +92,21 @@ const UserProvider = ({ children }) => {
       .catch(err => console.log(err));
   };
 
+  const markNotificationsRead = async notificationIds => {
+    try {
+      await service.markNotificationsRead(notificationIds);
+      const updatedNotifications = userDetails.notifications.map(
+        notification => ({
+          ...notification,
+          read: true
+        })
+      );
+      setUserDetails({ ...userDetails, notifications: updatedNotifications });
+    } catch (err) {
+      console.log(err.toJSON());
+    }
+  };
+
   // In order to execute an async function in a hook, we must create it inside (scoped)
   useEffect(() => {
     const authenticateAndGetUser = async () => {
@@ -100,6 +114,8 @@ const UserProvider = ({ children }) => {
     };
     authenticateAndGetUser();
   }, []);
+
+  console.log('userDetails: ', userDetails);
 
   return (
     <UserContext.Provider
@@ -113,7 +129,8 @@ const UserProvider = ({ children }) => {
         signup,
         logout,
         updateAddUserLikes,
-        updateRemoveUserLikes
+        updateRemoveUserLikes,
+        markNotificationsRead
       }}
     >
       {children}

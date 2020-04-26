@@ -5,11 +5,11 @@ import Toolbar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import { Link } from '@reach/router';
 import HomeIcon from '@material-ui/icons/Home';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useUser } from '../../contexts/userContext';
 import PostScream from '../scream/PostScream';
+import Notifications from './Notifications';
 
 const StyledToolBar = styled(Toolbar)`
   justify-content: center;
@@ -40,9 +40,7 @@ const Navbar = () => {
               </Tooltip>
             </Link>
             <Tooltip title="Notifications">
-              <StyledButton>
-                <NotificationsIcon />
-              </StyledButton>
+              <Notifications />
             </Tooltip>
           </>
         ) : (

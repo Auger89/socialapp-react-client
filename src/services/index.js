@@ -49,5 +49,9 @@ service.submitComment = (screamId, comment) =>
     headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
   });
 service.getUserData = userHandle => firebase.get(`/user/${userHandle}`);
+service.markNotificationsRead = notificationIds =>
+  firebase.post('/notifications', notificationIds, {
+    headers: { Authorization: localStorage.getItem(FIREBASE_ID_TOKEN) }
+  });
 
 export default service;
