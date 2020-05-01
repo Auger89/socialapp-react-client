@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import User from './pages/User';
 import Navbar from './components/layout/Navbar';
-import AuthRoute from './components/AuthRoute';
+import AuthRoute from './utils/AuthRoute';
 import './App.css';
 import materialTheme from './utils/theme';
 import { UserProvider } from './contexts/userContext';
