@@ -3,6 +3,8 @@ import { useParams } from '@reach/router';
 import Grid from '@material-ui/core/Grid';
 import Scream from '../components/scream/Scream';
 import StaticProfile from '../components/profile/StaticProfile';
+import ScreamSkeleton from '../utils/ScreamSkeleton';
+import ProfileSkeleton from '../utils/ProfileSkeleton';
 import useProfile from '../hooks/useProfile';
 
 const User = () => {
@@ -27,14 +29,10 @@ const User = () => {
   return (
     <Grid container spacing={4}>
       <Grid item sm={8} xs={12}>
-        {loading ? <p>Loading...</p> : userScreams()}
+        {loading ? <ScreamSkeleton /> : userScreams()}
       </Grid>
       <Grid item sm={4} xs={12}>
-        {!profile ? (
-          <p>Loading profile...</p>
-        ) : (
-          <StaticProfile profile={profile} />
-        )}
+        {!profile ? <ProfileSkeleton /> : <StaticProfile profile={profile} />}
       </Grid>
     </Grid>
   );

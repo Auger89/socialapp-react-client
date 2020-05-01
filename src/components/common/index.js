@@ -30,7 +30,6 @@ const ProfileImage = styled.img`
 `;
 
 const ProfileDetails = styled.div`
-  text-align: center;
   & span, svg: {
     vertical-align: middle;
   }

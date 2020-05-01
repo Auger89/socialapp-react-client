@@ -22,6 +22,7 @@ import {
   ProfileDetails,
   ProfileRow
 } from '../common';
+import ProfileSkeleton from '../../utils/ProfileSkeleton';
 
 const StyledPaper = styled(Paper)`
   padding: 20px;
@@ -43,6 +44,11 @@ const EditButton = styled(IconButton)`
   position: absolute;
   right: 0;
   bottom: 0;
+`;
+
+const LinkWrapper = styled.div`
+  margin: auto;
+  width: fit-content;
 `;
 
 const Profile = () => {
@@ -93,7 +99,7 @@ const Profile = () => {
       </Paper>
     );
   }
-  if (loadingUserData) return <p>Loading...</p>;
+  if (loadingUserData) return <ProfileSkeleton />;
 
   return (
     <StyledPaper>
@@ -114,14 +120,16 @@ const Profile = () => {
       </ImageWrapper>
       <Separator />
       <ProfileDetails>
-        <MaterialLink
-          component={Link}
-          to={`/users/${handle}`}
-          color="primary"
-          variant="h5"
-        >
-          {`@${handle}`}
-        </MaterialLink>
+        <LinkWrapper>
+          <MaterialLink
+            component={Link}
+            to={`/users/${handle}`}
+            color="primary"
+            variant="h5"
+          >
+            {`@${handle}`}
+          </MaterialLink>
+        </LinkWrapper>
         <Separator />
         {bio && (
           <>
