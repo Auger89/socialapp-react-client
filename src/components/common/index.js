@@ -44,6 +44,9 @@ const ProfileRow = styled.div`
   align-items: center;
   width: fit-content;
   margin: auto;
+  & svg {
+    margin-right: 5px;
+  }
 `;
 
 export {

@@ -49,7 +49,7 @@ const ProfileSkeleton = () => {
         <ProfileImage src={NoImage} alt="profile" />
       </ImageWrapper>
       <Separator />
-      <ProfileDetails>
+      <ProfileDetails style={{ textAlign: 'center' }}>
         <UserDiv theme={theme} />
         <Separator />
         <WidelineDiv />

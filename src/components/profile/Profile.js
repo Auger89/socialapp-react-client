@@ -133,7 +133,9 @@ const Profile = () => {
         <Separator />
         {bio && (
           <>
-            <Typography variant="body2">{bio}</Typography>
+            <ProfileRow>
+              <Typography variant="body2">{bio}</Typography>
+            </ProfileRow>
             <Separator />
           </>
         )}
@@ -141,7 +143,7 @@ const Profile = () => {
           <>
             <ProfileRow>
               <LocationOn />
-              <span>{location}</span>
+              <Typography variant="body2">{location}</Typography>
             </ProfileRow>
             <Separator />
           </>
@@ -151,7 +153,7 @@ const Profile = () => {
             <ProfileRow>
               <LinkIcon color="primary" />
               <a href={website} target="_blank" rel="noopener noreferrer">
-                {` ${website}`}
+                {website}
               </a>
             </ProfileRow>
             <Separator />
@@ -159,7 +161,7 @@ const Profile = () => {
         )}
         <ProfileRow>
           <CalendarToday color="primary" />
-          <span>{`Joined ${dayjs(createdAt).format('MMM YYYY')}`}</span>
+          <Typography>{`Joined ${dayjs(createdAt).format('MMM YYYY')}`}</Typography>
         </ProfileRow>
         <Tooltip title="Logout" placement="top">
           <IconButton onClick={logout}>
