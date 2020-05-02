@@ -3,7 +3,7 @@ import { FIREBASE_ID_TOKEN } from '../utils/constants';
 
 const firebase = axios.create({
   baseURL: 'https://europe-west1-social-app-45dd0.cloudfunctions.net/api',
-  timeout: 5000
+  timeout: 15000
 });
 
 const service = {};
